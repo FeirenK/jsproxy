@@ -5,10 +5,12 @@
 JSPROXY_VER=0.1.0
 OPENRESTY_VER=1.15.8.1
 
-SRC_URL=https://raw.githubusercontent.com/FeirenK/jsproxy/$JSPROXY_VER
+SRC_URL=https://raw.githubusercontent.com/FeirenK/jsproxy/master
 # BIN_URL=https://raw.githubusercontent.com/FeirenK/jsproxy-bin/master
 BIN_URL=https://openresty.org/download/openresty-$OPENRESTY_VER.tar.gz
-ZIP_URL=https://codeload.github.com/EtherDream/jsproxy/tar.gz
+#ZIP_URL=https://codeload.github.com/EtherDream/jsproxy/tar.gz
+ZIP_URL=https://github.com/FeirenK/jsproxy/archive/refs/heads/master.zip
+WWW_URL=https://github.com/FeirenK/jsproxy/archive/refs/heads/gh-pages.zip
 
 SUPPORTED_OS="Linux-x86_64"
 OS="$(uname)-$(uname -m)"
@@ -167,12 +169,12 @@ install() {
   log "nginx path: $NGX_DIR"
 
   log "下载代理服务 ..."
-  curl -o jsproxy.tar.gz $ZIP_URL/$JSPROXY_VER
+  curl -o jsproxy.tar.gz $ZIP_URL
   tar zxf jsproxy.tar.gz
   rm -f jsproxy.tar.gz
 
   log "下载静态资源 ..."
-  curl -o www.tar.gz $ZIP_URL/gh-pages
+  curl -o www.tar.gz $WWW_URL
   tar zxf www.tar.gz -C jsproxy-$JSPROXY_VER/www --strip-components=1
   rm -f www.tar.gz
 
@@ -218,7 +220,7 @@ main() {
 
     local dst=/opt/jsproxy/i.sh
     cp $0 $dst
-    chown jsproxy:nobody $dst
+    # chown jsproxy:nobody $dst
     if [[ $1 == "-s" ]]; then
       shift 1
     fi
