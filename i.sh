@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
 
-# { # this ensures the entire script is downloaded #
+{ # this ensures the entire script is downloaded #
 
 JSPROXY_VER=master
 OPENRESTY_VER=1.15.8.1
 
 SRC_URL=https://raw.githubusercontent.com/FeirenK/jsproxy/master
-# BIN_URL=https://raw.githubusercontent.com/FeirenK/jsproxy-bin/master
-BIN_URL=https://openresty.org/download/openresty-$OPENRESTY_VER.tar.gz
-#ZIP_URL=https://codeload.github.com/EtherDream/jsproxy/tar.gz
+BIN_URL=https://raw.githubusercontent.com/EtherDream/jsproxy-bin/master
 ZIP_URL=https://github.com/FeirenK/jsproxy/archive/refs/heads/master.zip
-WWW_URL=https://github.com/FeirenK/jsproxy/archive/refs/heads/gh-pages.zip
+
 
 SUPPORTED_OS="Linux-x86_64"
 OS="$(uname)-$(uname -m)"
@@ -216,19 +214,20 @@ main() {
   fi
 
   local cmd
-  if [[ $0 == *"i.sh" ]]; then
-    warn "本地调试模式"
+  # if [[ $0 == *"i.sh" ]]; then
+  #   warn "本地调试模式"
 
-    local dst=$0
-    # cp $0 $dst
-    # chown jsproxy:nobody $dst
-    if [[ $1 == "-s" ]]; then
-      shift 1
-    fi
-    cmd="bash $dst install $@"
-  else
-    cmd="curl -s $SRC_URL/i.sh | bash -s install $@"
-  fi
+  #   local dst=$0
+  #   # cp $0 $dst
+  #   # chown jsproxy:nobody $dst
+  #   if [[ $1 == "-s" ]]; then
+  #     shift 1
+  #   fi
+  #   cmd="bash $dst install $@"
+  # else
+  #   cmd="curl -s $SRC_URL/i.sh | bash -s install $@"
+  # fi
+  cmd="curl -s $SRC_URL/i.sh | bash -s install $@"
 
   iptables \
     -t nat \
@@ -245,7 +244,7 @@ main() {
 
   # log "切换到 jsproxy 用户，执行安装脚本 ..."
   # su - jsproxy -c "$cmd"
-  $cmd
+  `$cmd`
   local line=$(iptables -t nat -nL --line-numbers | grep "tcp dpt:80 redir ports 8080")
   iptables -t nat -D PREROUTING ${line%% *}
 
@@ -259,4 +258,4 @@ else
   main $@
 fi
 
-# } # this ensures the entire script is downloaded #
+} # this ensures the entire script is downloaded #
