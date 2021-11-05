@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 { # this ensures the entire script is downloaded #
 
@@ -14,7 +14,7 @@ SUPPORTED_OS="Linux-x86_64"
 OS="$(uname)-$(uname -m)"
 USER=$(whoami)
 
-INSTALL_DIR=/opt/jsproxy
+INSTALL_DIR=/home/jsproxy
 mkdir -p $INSTALL_DIR
 NGX_DIR=$INSTALL_DIR/openresty
 
