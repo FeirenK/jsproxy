@@ -2,7 +2,7 @@
 
 { # this ensures the entire script is downloaded #
 
-JSPROXY_VER=0.1.0
+JSPROXY_VER=master
 OPENRESTY_VER=1.15.8.1
 
 SRC_URL=https://raw.githubusercontent.com/FeirenK/jsproxy/master
@@ -17,6 +17,7 @@ OS="$(uname)-$(uname -m)"
 USER=$(whoami)
 
 INSTALL_DIR=/opt/jsproxy
+mkdir -p $INSTALL_DIR
 NGX_DIR=$INSTALL_DIR/openresty
 
 DOMAIN_SUFFIX=(
@@ -153,8 +154,8 @@ install() {
   cd $INSTALL_DIR
 
   log "下载 nginx 程序 ..."
-  # curl -O $BIN_URL/$OS/openresty-$OPENRESTY_VER.tar.gz
-  curl -O $BIN_URL
+  curl -O $BIN_URL/$OS/openresty-$OPENRESTY_VER.tar.gz
+  # curl -O $BIN_URL
   tar zxf openresty-$OPENRESTY_VER.tar.gz
   rm -f openresty-$OPENRESTY_VER.tar.gz
 
@@ -169,14 +170,14 @@ install() {
   log "nginx path: $NGX_DIR"
 
   log "下载代理服务 ..."
-  curl -o jsproxy.tar.gz $ZIP_URL
-  tar zxf jsproxy.tar.gz
-  rm -f jsproxy.tar.gz
+  wget -O jsproxy.zip $ZIP_URL
+  unzip jsproxy.zip
+  rm -f jsproxy.zip
 
-  log "下载静态资源 ..."
-  curl -o www.tar.gz $WWW_URL
-  tar zxf www.tar.gz -C jsproxy-$JSPROXY_VER/www --strip-components=1
-  rm -f www.tar.gz
+  # log "下载静态资源 ..."
+  # wget -O www.zip $WWW_URL
+  # unzip www.zip -d jsproxy-$JSPROXY_VER/www
+  # rm -f www.zip
 
   if [ -x server/run.sh ]; then
     warn "尝试停止当前服务 ..."
@@ -218,8 +219,8 @@ main() {
   if [[ $0 == *"i.sh" ]]; then
     warn "本地调试模式"
 
-    local dst=/opt/jsproxy/i.sh
-    cp $0 $dst
+    local dst=$0
+    # cp $0 $dst
     # chown jsproxy:nobody $dst
     if [[ $1 == "-s" ]]; then
       shift 1
