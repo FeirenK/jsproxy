@@ -1,7 +1,7 @@
 
 # 更新
 
-* 2019-07-24 [v0.1.0](https://github.com/EtherDream/jsproxy/blob/master/changelogs/v0.1.0.md) 发布，主要修复了缓存失效的问题。网络接口和之前版本不兼容，请及时更新服务端和 cfworker。
+* 2019-07-24 [v0.1.0](https://github.com/FeirenK/jsproxy/blob/master/changelogs/v0.1.0.md) 发布，主要修复了缓存失效的问题。网络接口和之前版本不兼容，请及时更新服务端和 cfworker。
 
 * 2019-06-22 [cfworker 无服务器版](cf-worker) 发布，长期使用演示服务的请使用该版本。
 
@@ -11,7 +11,7 @@
 # 安装
 
 ```bash
-curl https://raw.githubusercontent.com/EtherDream/jsproxy/0.1.0/i.sh | bash
+curl https://raw.githubusercontent.com/FeirenK/jsproxy/0.1.0/i.sh | bash
 ```
 
 * 自动安装目前只支持 Linux x64，并且需要 root 权限
@@ -28,7 +28,7 @@ curl https://raw.githubusercontent.com/EtherDream/jsproxy/0.1.0/i.sh | bash
 将域名 `example.com` 解析到服务器 IP，然后执行：
 
 ```bash
-curl https://raw.githubusercontent.com/EtherDream/jsproxy/master/i.sh | bash -s example.com
+curl https://raw.githubusercontent.com/FeirenK/jsproxy/master/i.sh | bash -s example.com
 ```
 
 访问: `https://example.com:8443`
@@ -105,7 +105,7 @@ tail server/nginx/logs/proxy.log
 
 # 相关文章
 
-* [基于 JS Hook 技术，打造最先进的在线代理](https://github.com/EtherDream/jsproxy/blob/master/docs/blogs/js-hook.md)
+* [基于 JS Hook 技术，打造最先进的在线代理](https://github.com/FeirenK/jsproxy/blob/master/docs/blogs/js-hook.md)
 
 
 # 项目特点
@@ -126,7 +126,7 @@ tail server/nginx/logs/proxy.log
 
 为缓解这个问题，本代理在页面头部注入一个 JS，用以重写绝大部分和 URL 相关的 API，使得页面中的 JS 获取到的仍是原始 URL：
 
-![](https://raw.githubusercontent.com/EtherDream/jsproxy-localtest/temp/hook.png)
+![](https://raw.githubusercontent.com/FeirenK/jsproxy-localtest/temp/hook.png)
 
 对于有些无法重写的 API，例如 `location`，本代理会将代码中字面出现的 `location` 替换成 `__location`，从而将操作转移到自定义对象上。当然对于非字面的情况（例如 `this['lo' + 'cation']`），目前还无法处理。
 
