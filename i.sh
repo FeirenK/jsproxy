@@ -1,4 +1,4 @@
-#!/bin/bash
+#!//usr/bin/env bash
 
 { # this ensures the entire script is downloaded #
 
@@ -227,7 +227,7 @@ main() {
   # else
   #   cmd="curl -s $SRC_URL/i.sh | bash -s install $@"
   # fi
-  curl -s $SRC_URL/i.sh | bash -s install $@
+  cmd="curl -s $SRC_URL/i.sh | bash -s install $@"
 
   iptables \
     -t nat \
@@ -243,9 +243,7 @@ main() {
   # fi
 
   # log "切换到 jsproxy 用户，执行安装脚本 ..."
-  # su - jsproxy -c "$cmd"
-
-  curl -s $SRC_URL/i.sh | bash -s install $@
+  su - root -c "$cmd"
 
   local line=$(iptables -t nat -nL --line-numbers | grep "tcp dpt:80 redir ports 8080")
   iptables -t nat -D PREROUTING ${line%% *}
