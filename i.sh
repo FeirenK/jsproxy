@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-{ # this ensures the entire script is downloaded #
+# { # this ensures the entire script is downloaded #
 
 JSPROXY_VER=master
 OPENRESTY_VER=1.15.8.1
@@ -259,4 +259,4 @@ else
   main $@
 fi
 
-} # this ensures the entire script is downloaded #
+# } # this ensures the entire script is downloaded #
