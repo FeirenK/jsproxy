@@ -213,7 +213,7 @@ main() {
     exit 1
   fi
 
-  local cmd
+  # local cmd
   # if [[ $0 == *"i.sh" ]]; then
   #   warn "本地调试模式"
 
@@ -227,7 +227,7 @@ main() {
   # else
   #   cmd="curl -s $SRC_URL/i.sh | bash -s install $@"
   # fi
-  cmd="curl -s $SRC_URL/i.sh | bash -s install $@"
+  curl -s $SRC_URL/i.sh | bash -s install $@
 
   iptables \
     -t nat \
@@ -244,7 +244,9 @@ main() {
 
   # log "切换到 jsproxy 用户，执行安装脚本 ..."
   # su - jsproxy -c "$cmd"
-  `$cmd`
+
+  curl -s $SRC_URL/i.sh | bash -s install $@
+
   local line=$(iptables -t nat -nL --line-numbers | grep "tcp dpt:80 redir ports 8080")
   iptables -t nat -D PREROUTING ${line%% *}
 
